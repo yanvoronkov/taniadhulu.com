@@ -46,6 +46,14 @@
     </script>
 
     <style>
+        html {
+            font-size: 17px; /* Увеличенный базовый шрифт для мобильных */
+        }
+        @media (min-width: 768px) {
+            html {
+                font-size: 16px; /* Возврат к стандарту на десктопах */
+            }
+        }
         body {
             font-family: 'Manrope', sans-serif;
             @apply text-secondary bg-white;
@@ -330,14 +338,15 @@
             </h2>
             
             <div class="grid md:grid-cols-3 gap-10 md:gap-12">
-                <!-- Отзыв 1 -->
                 <div class="relative fade-up flex flex-col h-full">
                     <span class="absolute -top-8 -left-2 text-7xl font-serif text-primary opacity-20">"</span>
                     <p class="text-secondary/80 font-light text-base md:text-lg mb-8 leading-relaxed relative z-10 flex-grow">
-                        После разбора я наконец-то поняла, почему мне было так тесно на старой работе. Я увидела свои сильные стороны и начала делать первые шаги в новом направлении без страха.
+                        Я в шоке, насколько всё точно. Особенно про мои страхи проявляться и сильные стороны в коммуникациях. Теперь я понимаю, почему меня так «штормило» на работе. Это действительно инструкция к себе!
                     </p>
                     <div class="flex items-center gap-4 border-t border-accent-dark pt-4">
-                        <img alt="Елена" class="w-12 h-12 rounded-full object-cover grayscale" src="https://images.unsplash.com/photo-1548142813-c348350df52b?auto=format&fit=crop&q=80&w=100"/>
+                        <div class="w-12 h-12 rounded-full bg-teal/20 flex items-center justify-center text-teal">
+                            <span class="material-icons-round">face_3</span>
+                        </div>
                         <div>
                             <p class="font-bold font-serif text-secondary">Елена</p>
                             <p class="text-xs text-secondary/50">38 лет</p>
@@ -345,29 +354,31 @@
                     </div>
                 </div>
                 
-                <!-- Отзыв 2 -->
                 <div class="relative mt-6 md:mt-0 fade-up flex flex-col h-full" style="transition-delay: 0.1s;">
                     <span class="absolute -top-8 -left-2 text-7xl font-serif text-primary opacity-20">"</span>
                     <p class="text-secondary/80 font-light text-base md:text-lg mb-8 leading-relaxed relative z-10 flex-grow">
-                        Таня открыла мне глаза. Я всю жизнь думала, что должна просто быть хорошей мамой, но внутри сходила с ума от нереализованности. Теперь у меня есть четкий план.
+                        Пришла в состоянии полной потерянности. Вроде бы всё есть — муж, дети, дом — а внутри пустота. После диагностики матрицы я как будто проснулась. Сейчас начала свой проект и чувствую себя живой!
                     </p>
                     <div class="flex items-center gap-4 border-t border-accent-dark pt-4">
-                        <img alt="Мария" class="w-12 h-12 rounded-full object-cover grayscale" src="https://images.unsplash.com/photo-1573497019940-1c28c88b4f3e?auto=format&fit=crop&q=80&w=100"/>
+                        <div class="w-12 h-12 rounded-full bg-teal/20 flex items-center justify-center text-teal">
+                            <span class="material-icons-round">face_3</span>
+                        </div>
                         <div>
                             <p class="font-bold font-serif text-secondary">Мария</p>
-                            <p class="text-xs text-secondary/50">42 года</p>
+                            <p class="text-xs text-secondary/50">43 года</p>
                         </div>
                     </div>
                 </div>
                 
-                <!-- Отзыв 3 -->
                 <div class="relative mt-6 md:mt-0 fade-up flex flex-col h-full" style="transition-delay: 0.2s;">
                     <span class="absolute -top-8 -left-2 text-7xl font-serif text-primary opacity-20">"</span>
                     <p class="text-secondary/80 font-light text-base md:text-lg mb-8 leading-relaxed relative z-10 flex-grow">
-                        Разбор матрицы судьбы — это не магия, это невероятно точная инструкция к самой себе. Я стала увереннее, ушел синдром самозванца.
+                        Это было очень глубоко. Разбор помог мне принять свои теневые стороны и понять, как превратить их в ресурс. Синдром самозванца начал отступать. Благодарю за профессионализм и деликатность!
                     </p>
                     <div class="flex items-center gap-4 border-t border-accent-dark pt-4">
-                        <img alt="Анна" class="w-12 h-12 rounded-full object-cover grayscale" src="https://images.unsplash.com/photo-1580489944761-15a19d654956?auto=format&fit=crop&q=80&w=100"/>
+                        <div class="w-12 h-12 rounded-full bg-teal/20 flex items-center justify-center text-teal">
+                            <span class="material-icons-round">face_3</span>
+                        </div>
                         <div>
                             <p class="font-bold font-serif text-secondary">Анна</p>
                             <p class="text-xs text-secondary/50">35 лет</p>
@@ -456,7 +467,7 @@
                     <h3 class="font-serif text-4xl md:text-5xl mb-2 text-secondary">Я, Таня Дюлю</h3>
                     <p class="text-xs md:text-sm uppercase tracking-[0.2em] text-teal mb-8 md:mb-10 font-medium">Нумеролог</p>
                     
-                    <div class="space-y-6 text-sm md:text-base text-secondary/80 font-light leading-relaxed md:columns-2 gap-8 mb-10">
+                    <div class="space-y-6 text-sm md:text-base text-secondary/80 font-light leading-relaxed gap-8 mb-10">
                         <p class="break-inside-avoid mb-4">
                             Работаю с методом Матрицы Судьбы и помогаю женщинам увидеть свой реальный потенциал на текущем этапе жизни.
                         </p>
