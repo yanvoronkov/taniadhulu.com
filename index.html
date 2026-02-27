@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8"/>
     <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Диагностика судьбы | Раскрой свой потенциал | Tania Dhulyu</title>
+    <title>Диагностика судьбы | Раскрой свой потенциал | Tania Dhulu</title>
     <meta name="description" content="Узнайте, как диагностика матрицы судьбы поможет вам раскрыть свой потенциал, найти предназначение и обрести гармонию. Индивидуальный разбор от Tania Dhulyu.">
     <meta name="keywords" content="матрица судьбы, диагностика судьбы, предназначение, самопознание, нумерология, цифровой психолог, самореализация, Таня Дюлю">
     <meta name="author" content="Tania Dhulyu">
@@ -22,17 +22,19 @@
     <meta property="twitter:description" content="Узнайте, как матрица судьбы поможет вам найти предназначение и обрести гармонию в жизни.">
     <meta property="twitter:image" content="https://taniadhulu.com/images/og_image.png">
     
-    <!-- Подключение шрифтов (из референса) -->
+    <!-- Подключение шрифтов -->
     <link href="https://fonts.googleapis.com" rel="preconnect"/>
     <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Arimo:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+    <link href="https://fonts.cdnfonts.com/css/intro" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/evolventa" rel="stylesheet">
     
     <!-- Иконки Material -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/favicon.png">
-    <link rel="apple-touch-icon" href="images/favicon.png">
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="apple-touch-icon" href="favicon.svg">
 
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -50,8 +52,10 @@
                         "text-light": "#f5f5f5"
                     },
                     fontFamily: {
-                        "sans": ["Manrope", "sans-serif"],
-                        "serif": ["Playfair Display", "serif"],
+                        "sans": ["Arimo", "sans-serif"],
+                        "serif": ["Intro", "sans-serif"],
+                        "evolventa": ["Evolventa", "sans-serif"],
+                        "intro": ["Intro", "sans-serif"],
                     },
                     boxShadow: {
                         'magazine': '0 20px 40px -15px rgba(0, 0, 0, 0.15)',
@@ -75,11 +79,15 @@
             }
         }
         body {
-            font-family: 'Manrope', sans-serif;
+            font-family: 'Arimo', sans-serif;
             @apply text-secondary bg-white;
         }
         h1, h2, h3, h4, h5, h6 {
-            font-family: 'Playfair Display', serif;
+            font-family: 'Intro', sans-serif;
+            font-weight: 700;
+        }
+        .font-evolventa {
+            font-family: 'Evolventa', sans-serif;
         }
         .corner-triangle {
             clip-path: polygon(100% 0, 0 0, 100% 100%);
@@ -94,7 +102,7 @@
             left: 1rem;
             width: 100%;
             height: 100%;
-            border: 1px solid #A90101; /* Цвет primary */
+            border: 4px solid #A90101; /* Цвет primary */
             z-index: 0;
             transition: all 0.3s ease;
         }
@@ -140,7 +148,7 @@
                 <div class="lg:col-span-6 xl:col-span-7 space-y-4 md:space-y-8 order-2 lg:order-1 relative z-20 fade-up">
                     <div class="hidden md:flex items-center gap-3 mb-2">
                         <div class="w-8 h-0.5 bg-primary"></div>
-                        <span class="text-secondary font-bold tracking-widest uppercase text-xs md:text-sm">Матрица Судьбы</span>
+                        <span class="text-secondary font-bold tracking-widest uppercase text-xs md:text-sm font-evolventa">Матрица Судьбы</span>
                     </div>
                     
                     <h1 class="text-[1.5rem] xs:text-3xl md:text-5xl lg:text-4xl xl:text-6xl font-serif leading-[1.1] text-secondary">
@@ -155,7 +163,7 @@
                     </p>
                     
                     <div class="pt-2 w-[95%] md:pt-6">
-                        <a href="tg://resolve?domain=taniadhulu_bot" class="group rounded-xl relative inline-flex justify-center bg-secondary text-white font-medium py-4 px-6 md:py-5 md:px-10 overflow-hidden shadow-lg transition-all hover:shadow-xl w-full sm:w-auto text-sm md:text-base">
+                        <a href="tg://resolve?domain=taniadhulu_bot" class="group rounded-xl relative inline-flex justify-center bg-primary text-white font-medium py-4 px-6 md:py-5 md:px-10 overflow-hidden shadow-lg transition-all hover:shadow-xl w-full sm:w-auto text-sm md:text-base">
                             <span class="absolute top-0 left-0 w-0 h-full bg-primary transition-all duration-300 ease-out group-hover:w-full"></span>
                             <span class="relative z-10 flex items-center gap-2">
                                 Узнайте, как диагностика судьбы поможет вам
@@ -168,11 +176,11 @@
                 <div class="lg:col-span-5 xl:col-span-5 order-1 lg:order-2 relative flex items-center justify-center lg:justify-end fade-up mb-8 lg:mb-0" style="transition-delay: 0.2s;">
                     <div class="relative w-[55%] xs:w-[60%] sm:w-[50%] lg:w-[70%] xl:w-[80%] aspect-[3/4] offset-frame z-10 md:mr-8">
                         <div class="relative h-full bg-gray-200 overflow-hidden shadow-magazine">
-                            <img alt="Портрет задумчивой женщины" class="object-cover object-top md:object-center w-full h-full grayscale hover:grayscale-0 transition-all duration-700" src="images/hero.jpg"/>
+                            <img alt="Портрет задумчивой женщины" class="object-cover object-top md:object-center w-full h-full transition-all duration-700" src="images/hero.jpg"/>
                         </div>
                         <div class="absolute -bottom-6 -right-6 md:-bottom-10 md:-right-10 bg-white text-secondary p-1 md:p-2 max-w-[180px] md:max-w-xs z-20 shadow-lg border-l-4 border-primary">
-                            <h4 class="font-serif text-md md:text-xl italic mb-1">Татьяна Дюлю</h4>
-                            <p class="text-[10px] md:text-sm text-secondary/70 uppercase tracking-widest font-medium">Диагностика судьбы</p>
+                            <h4 class="font-serif text-md md:text-xl italic mb-1">Таня Дюлю</h4>
+                            <p class="text-[10px] md:text-sm text-secondary/70 uppercase tracking-widest font-evolventa font-medium">Диагностика судьбы</p>
                         </div>
                     </div>
                 </div>
@@ -185,7 +193,7 @@
         <div class="container mx-auto px-4 md:px-6">
             <div class="flex flex-col lg:flex-row gap-12 md:gap-20 items-start">
                 <div class="w-full lg:w-5/12 relative pt-6 md:pt-12 fade-up">
-                    <div class="relative z-10 bg-accent/30 p-8 md:p-16 border border-accent-dark">
+                    <div class="relative z-10 bg-accent/30 p-8 md:p-8 border border-accent-dark">
                         <h2 class="text-2xl md:text-5xl font-serif text-secondary leading-tight mb-6 md:mb-8">
                             Если тебе кажется, что после <span class="text-primary italic">35-40 лет</span> уже поздно что-то менять...
                         </h2>
@@ -201,7 +209,7 @@
                     <div class="space-y-10 md:space-y-12 md:mt-12">
                         <div class="relative aspect-[4/5] offset-frame">
                             <div class="bg-gray-100 w-full h-full relative z-10 overflow-hidden">
-                                <img alt="Женщина в рабочих заботах" class="w-full h-full object-cover object-top md:object-center grayscale hover:grayscale-0 transition-all duration-500" src="images/housewife.jpg"/>
+                                <img alt="Женщина в рабочих заботах" class="w-full h-full object-cover object-top md:object-center transition-all duration-500" src="images/housewife.jpg"/>
                             </div>
                         </div>
                         <div class="bg-primary text-white p-4 md:p-6 text-center shadow-md relative z-10">
@@ -212,12 +220,12 @@
                     <div class="space-y-10 md:space-y-12">
                         <div class="relative aspect-[4/5] offset-frame">
                             <div class="bg-gray-100 w-full h-full relative z-10 overflow-hidden">
-                                <img alt="Уставшая женщина" class="w-full h-full object-cover object-top md:object-center grayscale hover:grayscale-0 transition-all duration-500" src="images/mother.jpg"/>
+                                <img alt="Уставшая женщина" class="w-full h-full object-cover object-top md:object-center transition-all duration-500" src="images/mother.jpg"/>
                             </div>
                         </div>
                         <div class="relative aspect-[4/5] md:aspect-square offset-frame">
                             <div class="bg-gray-100 w-full h-full relative z-10 overflow-hidden">
-                                <img alt="Женщина думает" class="w-full h-full object-cover object-top md:object-center grayscale hover:grayscale-0 transition-all duration-500" src="images/wife.jpg"/>
+                                <img alt="Женщина думает" class="w-full h-full object-cover object-top md:object-center transition-all duration-500" src="images/wife.jpg"/>
                             </div>
                         </div>
                     </div>
@@ -235,10 +243,10 @@
             <div class="grid lg:grid-cols-2 gap-12 md:gap-20 items-center">
                 <div class="fade-up" style="transition-delay: 0.2s;">
                     <h2 class="text-3xl md:text-5xl lg:text-6xl font-serif mb-8 md:mb-12">
-                        Снаружи кажется, <br/>что <span class="text-teal italic">всё идеально: </span>дом, семья, стабильность...
+                        Снаружи кажется, <br/>что <span class="text-primary italic">всё идеально: </span>дом, семья, стабильность...
                     </h2>
-                    <div class="space-y-8 md:pl-8 border-l border-gray-600">
-                        <div class="group cursor-default mt-4 p-5 md:p-6 bg-white/5 border border-teal/30">
+                    <div class="space-y-8 border-l border-gray-600">
+                        <div class="group cursor-default mt-4 p-5 md:p-6 bg-white/5 border border-primary">
                             <div class="flex items-center gap-3 md:gap-4 mb-2 text-white">
                                 <!-- <span class="material-icons-round text-teal">priority_high</span> -->
                                 <h4 class="font-serif text-xl md:text-2xl">Но внутри — пустота</h4>
@@ -250,8 +258,8 @@
                     </div>
                 </div>
                 <div class="relative fade-up">
-                    <div class="absolute -top-4 -left-4 md:-top-6 md:-left-6 border border-white/20 w-full h-full z-0"></div>
-                    <img alt="Благополучная семья в доме" class="relative z-10 w-full h-[300px] md:h-[500px] object-cover filter contrast-125 brightness-90 grayscale-[40%]" src="images/family.jpg"/>
+                    <div class="absolute -top-4 -left-4 md:-top-6 md:-left-6 border-4 border-white/20 w-full h-full z-0"></div>
+                    <img alt="Благополучная семья в доме" class="relative z-10 w-full h-[300px] md:h-[500px] object-cover filter contrast-125 brightness-90" src="images/family.jpg"/>
                 </div>
             </div>
         </div>
@@ -296,9 +304,9 @@
             <div class="flex flex-col md:flex-row justify-between mb-10 md:mb-16 gap-6 fade-up">
                 <div>
                     <span class="text-teal font-bold tracking-widest uppercase text-xs md:text-sm mb-2 block">Переходите по кнопке ниже</span>
-                    <h2 class="text-3xl md:text-5xl lg:text-6xl font-serif text-secondary">Если вы хотите:</h2>
+                    <h2 class="text-3xl md:text-5xl lg:text-6xl font-serif text-primary">Если вы хотите:</h2>
                 </div>
-                <a href="tg://resolve?domain=taniadhulu_bot" class="hidden md:block border-b border-primary text-secondary pb-1 hover:text-primary transition-colors text-sm uppercase tracking-widest font-medium">
+                <a href="tg://resolve?domain=taniadhulu_bot" class="hidden md:block border-b border-primary text-secondary pb-1 hover:text-primary transition-colors text-sm uppercase tracking-widest font-evolventa font-medium">
                     Узнать подробнее
                 </a>
             </div>
@@ -306,7 +314,7 @@
             <div class="grid md:grid-cols-2 xl:grid-cols-4 gap-0 border-t border-l border-accent-dark">
                 <!-- Карточка 1 -->
                 <div class="group p-8 md:p-10 border-r border-b border-accent-dark hover:bg-accent/20 transition-colors duration-300 relative fade-up">
-                    <span class="material-icons-round text-4xl text-teal/50 group-hover:text-primary transition-colors mb-6 block">favorite_border</span>
+                    <span class="material-icons-round text-4xl text-primary/50 group-hover:text-primary transition-colors mb-6 block">favorite_border</span>
                     <h3 class="font-serif text-xl md:text-2xl mb-4 text-secondary">Удовлетворение</h3>
                     <p class="text-sm text-secondary/70 font-light leading-relaxed">
                         Начать получать удовлетворение от вашей деятельности и жизни в целом.
@@ -315,7 +323,7 @@
                 </div>
                 <!-- Карточка 2 -->
                 <div class="group p-8 md:p-10 border-r border-b border-accent-dark hover:bg-accent/20 transition-colors duration-300 relative fade-up" style="transition-delay: 0.1s;">
-                    <span class="material-icons-round text-4xl text-teal/50 group-hover:text-primary transition-colors mb-6 block">explore</span>
+                    <span class="material-icons-round text-4xl text-primary/50 group-hover:text-primary transition-colors mb-6 block">explore</span>
                     <h3 class="font-serif text-xl md:text-2xl mb-4 text-secondary">Ясность пути</h3>
                     <p class="text-sm text-secondary/70 font-light leading-relaxed">
                         Ясно увидеть какое направление подходит именно вам, где вы сможете раскрыть потенциал и достичь успеха.
@@ -324,7 +332,7 @@
                 </div>
                 <!-- Карточка 3 -->
                 <div class="group p-8 md:p-10 border-r border-b border-accent-dark hover:bg-accent/20 transition-colors duration-300 relative fade-up" style="transition-delay: 0.2s;">
-                    <span class="material-icons-round text-4xl text-teal/50 group-hover:text-primary transition-colors mb-6 block">public</span>
+                    <span class="material-icons-round text-4xl text-primary/50 group-hover:text-primary transition-colors mb-6 block">public</span>
                     <h3 class="font-serif text-xl md:text-2xl mb-4 text-secondary">Польза миру</h3>
                     <p class="text-sm text-secondary/70 font-light leading-relaxed">
                         Быть уверенной, что несёте пользу миру и выполняете свою миссию на этом пути.
@@ -333,7 +341,7 @@
                 </div>
                 <!-- Карточка 4 -->
                 <div class="group p-8 md:p-10 border-r border-b border-accent-dark hover:bg-accent/20 transition-colors duration-300 relative fade-up" style="transition-delay: 0.3s;">
-                    <span class="material-icons-round text-4xl text-teal/50 group-hover:text-primary transition-colors mb-6 block">star_outline</span>
+                    <span class="material-icons-round text-4xl text-primary/50 group-hover:text-primary transition-colors mb-6 block">star_outline</span>
                     <h3 class="font-serif text-xl md:text-2xl mb-4 text-secondary">Признание</h3>
                     <p class="text-sm text-secondary/70 font-light leading-relaxed">
                         Чувствовать себя значимой, получать признание и благодарности от своих людей.
@@ -354,17 +362,17 @@
     <section class="py-16 md:py-24 bg-accent/20 relative">
         <div class="container mx-auto px-4 md:px-6">
             <h2 class="text-center text-3xl md:text-4xl font-serif mb-16 md:mb-20 text-secondary fade-up">
-                Отзывы моих <span class="italic text-teal">клиентов</span>
+                Отзывы моих <span class="italic text-primary">клиентов</span>
             </h2>
             
-            <div class="grid md:grid-cols-3 gap-10 md:gap-12">
+            <div class="grid xl:grid-cols-3 gap-10 md:gap-12">
                 <div class="relative fade-up flex flex-col h-full">
                     <span class="absolute -top-8 -left-2 text-7xl font-serif text-primary opacity-20">"</span>
                     <p class="text-secondary/80 font-light text-base md:text-lg mb-8 leading-relaxed relative z-10 flex-grow">
                         Хочу выразить огромную благодарность за консультацию по Матрице Судьбы! Этот опыт буквально открыл мне глаза на вещи, которые я всегда чувствовала, но никак не могла осознать. Вечный поиск себя и своего предназначения не давал мне покоя, но на консультации все словно разложилось по полочкам. Появилось четкое понимание того, что делать дальше.
                     </p>
                     <div class="flex items-center gap-4 border-t border-accent-dark pt-4">
-                        <div class="w-12 h-12 rounded-full bg-teal/20 flex items-center justify-center text-teal">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                             <span class="material-icons-round">face_3</span>
                         </div>
                         <div>
@@ -379,7 +387,7 @@
                         Да, именно Матрица судьбы помогла мне увидеть чего я действительно хочу, помогла мне обратить внимание на мои таланты, которые я сама от себя запрятала. У меня действительно всё получается легко. Открываются новые возможности. Приходят нужные люди. Решаются проблемы, которые ещё месяц-два назад казались нерешаемыми. У меня такое ощущение, что ты просто ведёшь меня за руку туда, куда я хочу идти.
                     </p>
                     <div class="flex items-center gap-4 border-t border-accent-dark pt-4">
-                        <div class="w-12 h-12 rounded-full bg-teal/20 flex items-center justify-center text-teal">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                             <span class="material-icons-round">face_3</span>
                         </div>
                         <div>
@@ -394,7 +402,7 @@
                         Таня, твои консультации бомбические! Второй раз я прихожу к тебе и второй раз получаю информацию, которая помогает мне прожить сложную ситуацию в жизни. Цифры это магия и ты умеешь ими управлять и направлять в нужное русло, а твоя поддержка заряжает!
                     </p>
                     <div class="flex items-center gap-4 border-t border-accent-dark pt-4">
-                        <div class="w-12 h-12 rounded-full bg-teal/20 flex items-center justify-center text-teal">
+                        <div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
                             <span class="material-icons-round">face_3</span>
                         </div>
                         <div>
@@ -414,18 +422,18 @@
                     <h2 class="text-3xl md:text-4xl lg:text-5xl font-serif mb-8 md:mb-12 text-secondary fade-up">
                         Кому особенно <br/> полезна <span class="text-primary italic">матрица судьбы:</span>
                     </h2>
-                    <div class="hidden lg:block relative p-8 fade-up mt-10">
-                        <div class="absolute inset-0 border-2 border-accent-dark translate-x-4 translate-y-4"></div>
+                    <!-- <div class="hidden lg:block relative p-8 fade-up mt-10">
+                        <div class="absolute inset-0 border-4 border-primary translate-x-4 translate-y-4"></div>
                         <div class="relative z-10 bg-accent/30 p-8 shadow-sm">
                             <p class="font-serif text-xl italic text-secondary text-center">"Обрети опору для себя"</p>
                         </div>
-                    </div>
+                    </div> -->
                 </div>
                 
                 <div class="lg:col-span-7 order-2">
                     <div class="space-y-6 md:space-y-10">
                         <div class="flex gap-4 md:gap-6 group fade-up">
-                            <span class="text-3xl md:text-4xl font-serif text-accent-dark group-hover:text-primary transition-colors">01</span>
+                            <span class="text-3xl md:text-4xl font-serif text-primary transition-colors">01</span>
                             <div class="pt-1 md:pt-2">
                                 <p class="text-secondary/80 font-light text-sm md:text-base leading-relaxed">
                                     Кто хочет реализоваться, но чувствует внутренние ограничения и страх проявляться.
@@ -433,7 +441,7 @@
                             </div>
                         </div>
                         <div class="flex gap-4 md:gap-6 group fade-up">
-                            <span class="text-3xl md:text-4xl font-serif text-accent-dark group-hover:text-primary transition-colors">02</span>
+                            <span class="text-3xl md:text-4xl font-serif text-primary transition-colors">02</span>
                             <div class="pt-1 md:pt-2">
                                 <p class="text-secondary/80 font-light text-sm md:text-base leading-relaxed">
                                     У кого внешне всё хорошо, но внутри пустота и нет удовлетворения.
@@ -441,7 +449,7 @@
                             </div>
                         </div>
                         <div class="flex gap-4 md:gap-6 group fade-up">
-                            <span class="text-3xl md:text-4xl font-serif text-accent-dark group-hover:text-primary transition-colors">03</span>
+                            <span class="text-3xl md:text-4xl font-serif text-primary transition-colors">03</span>
                             <div class="pt-1 md:pt-2">
                                 <p class="text-secondary/80 font-light text-sm md:text-base leading-relaxed">
                                     Кто не понимает, куда идти дальше, несмотря на желание что-то изменить.
@@ -449,7 +457,7 @@
                             </div>
                         </div>
                         <div class="flex gap-4 md:gap-6 group fade-up">
-                            <span class="text-3xl md:text-4xl font-serif text-accent-dark group-hover:text-primary transition-colors">04</span>
+                            <span class="text-3xl md:text-4xl font-serif text-primary transition-colors">04</span>
                             <div class="pt-1 md:pt-2">
                                 <p class="text-secondary/80 font-light text-sm md:text-base leading-relaxed">
                                     Кто хочет признания и значимости, но не понимает, в чём его ценность и какие есть таланты.
@@ -457,7 +465,7 @@
                             </div>
                         </div>
                         <div class="flex gap-4 md:gap-6 group fade-up">
-                            <span class="text-3xl md:text-4xl font-serif text-accent-dark group-hover:text-primary transition-colors">05</span>
+                            <span class="text-3xl md:text-4xl font-serif text-primary transition-colors">05</span>
                             <div class="pt-1 md:pt-2">
                                 <p class="text-secondary/80 font-light text-sm md:text-base leading-relaxed">
                                     Кто ищет себя, пробует разные направления, но что-то не получается: тяжело, не подходит, не чувствуется в этом своя реализация.
@@ -478,17 +486,17 @@
                     <div class="h-[500px] md:h-[600px] relative overflow-hidden shadow-magazine">
                         <picture>
                             <source media="(min-width: 768px)" srcset="images/about.jpg">
-                            <img alt="Таня Дюлю" class="w-full h-full object-cover object-top md:object-center grayscale hover:grayscale-0 transition-all duration-700" src="images/about-mobile.jpg"/>
+                            <img alt="Таня Дюлю" class="w-full h-full object-cover object-top md:object-center transition-all duration-700" src="images/about-mobile.jpg"/>
                         </picture>
                     </div>
                 </div>
                 <div class="md:col-span-7 fade-up">
-                    <h3 class="font-serif text-4xl md:text-5xl mb-2 text-secondary">Я, Таня Дюлю</h3>
-                    <p class="text-xs md:text-sm uppercase tracking-[0.2em] text-teal mb-8 md:mb-10 font-medium">Нумеролог</p>
+                    <h3 class="font-serif text-4xl md:text-5xl mb-2 text-primary">Я, Таня Дюлю</h3>
+                    <p class="text-xs md:text-sm uppercase tracking-[0.2em] text-teal mb-8 md:mb-10 font-medium font-evolventa">Нумеролог</p>
                     
                     <div class="space-y-6 text-sm md:text-base text-secondary/80 font-light leading-relaxed gap-8 mb-10">
                         <p class="break-inside-avoid mb-4">
-                            Работаю с методом Матрицы Судьбы и помогаю женщинам увидеть свой реальный потенциал на текущем этапе жизни.
+                            Работаю с методом Матрица Судьбы и помогаю женщинам увидеть свой реальный потенциал на текущем этапе жизни.
                         </p>
                         <p class="break-inside-avoid mb-4">
                             Показываю, какие способности уже готовы к проявлению и в каком направлении стоит развиваться, чтобы это давало результат и внутреннее удовлетворение.
@@ -516,7 +524,7 @@
         <div class="container mx-auto px-4 md:px-6">
             <div class="flex flex-col md:flex-row justify-between items-center mb-12 gap-6">
                 <div class="text-center md:text-left">
-                    <span class="font-serif text-2xl font-bold tracking-widest text-white">TANIA DHULYU</span>
+                    <span class="font-serif text-2xl font-bold tracking-widest text-white">TANIA DHULU</span>
                     <p class="text-teal/70 text-sm mt-2 font-light">Раскрой свой потенциал после 35 лет</p>
                 </div>
                 <div class="flex gap-4">
