@@ -308,7 +308,7 @@
 
             <div class="pt-2 w-[95%] md:pt-6">
               <a
-                href="tg://resolve?domain=taniadhulu_bot"
+                href="https://t.me/taniadhulu_bot"
                 class="group rounded-xl relative inline-flex justify-center bg-primary text-white font-medium py-4 px-6 md:py-5 md:px-10 overflow-hidden shadow-lg transition-all hover:shadow-xl w-full sm:w-auto text-sm md:text-base"
               >
                 <span
@@ -567,7 +567,7 @@
             </h2>
           </div>
           <a
-            href="tg://resolve?domain=taniadhulu_bot"
+            href="https://t.me/taniadhulu_bot"
             class="hidden md:block border-b border-primary text-secondary pb-1 hover:text-primary transition-colors text-sm uppercase tracking-widest font-evolventa font-medium"
           >
             Узнать подробнее
@@ -660,7 +660,7 @@
 
         <div class="mt-12 text-center fade-up">
           <a
-            href="tg://resolve?domain=taniadhulu_bot"
+            href="https://t.me/taniadhulu_bot"
             class="inline-block bg-primary text-white font-medium py-4 px-10 md:py-5 md:px-12 rounded-xl shadow-lg hover:bg-secondary transition-all transform hover:-translate-y-1 text-sm md:text-base tracking-wider"
           >
             УЗНАТЬ ПОДРОБНЕЕ
@@ -992,7 +992,7 @@
               class="flex flex-col sm:flex-row items-center justify-between border-t border-accent-dark pt-8 gap-6"
             >
               <a
-                href="tg://resolve?domain=taniadhulu_bot"
+                href="https://t.me/taniadhulu_bot"
                 class="bg-primary rounded-xl text-white font-medium py-4 px-8 md:py-5 md:px-10 text-sm md:text-base tracking-wider hover:bg-secondary transition-all duration-300 shadow-lg w-full sm:w-auto text-center"
               >
                 УЗНАТЬ ПОДРОБНЕЕ
@@ -1102,24 +1102,27 @@
       });
     </script>
 
-    <!-- Meta Pixel + Make.com CAPI: отслеживание кликов по кнопкам Telegram-бота -->
+    <!-- Meta Pixel + CAPI: отслеживание кликов + Telegram start-параметр для атрибуции -->
     <script>
       (function () {
         // ─── Настройки ──────────────────────────────────────────────────────────
-        var MAKE_WEBHOOK_URL = "https://hook.eu1.make.com/dsd5kbdpx31k8wdh1pyhtnd4lagfwbgl";
-        var PIXEL_ID         = "945363138052136";
+        var WEBHOOK_URL  = "https://hook.eu1.make.com/dsd5kbdpx31k8wdh1pyhtnd4lagfwbgl";
+        var PIXEL_ID     = "945363138052136";
+        var TG_BOT       = "taniadhulu_bot";
+        // Название воронки — передаётся в start-параметр; бот читает это значение
+        // и запускает соответствующий сценарий
+        var FUNNEL_NAME  = "realizatsia";
 
-        // ─── 0. Получение IP-адреса пользователя ────────────────────────────────
+        // ─── 0. Получение IP-адреса пользователя (асинхронно) ───────────────────
         var clientIpAddress = null;
         fetch("https://api.ipify.org?format=json")
-          .then(function (res) { return res.json(); })
-          .then(function (data) { clientIpAddress = data.ip; })
-          .catch(function () { /* тихая ошибка */ });
+          .then(function (r) { return r.json(); })
+          .then(function (d) { clientIpAddress = d.ip; updateTelegramLinks(); })
+          .catch(function () {});
 
-        // ─── 1. Генерация уникального EventID для дедупликации ───────────────────
-        // Один eventID на сессию: Meta сам склеит Pixel-событие и CAPI-событие
+        // ─── 1. Генерация/получение уникального EventID ──────────────────────────
         function getOrCreateEventId() {
-          var key = "meta_tg_event_id";
+          var key    = "meta_tg_event_id";
           var stored = sessionStorage.getItem(key);
           if (stored) return stored;
           var id = (typeof crypto !== "undefined" && crypto.randomUUID)
@@ -1129,137 +1132,169 @@
           return id;
         }
 
-        // ─── 2. Сбор данных из URL (максимум для CAPI) ───────────────────────────
-        function collectUrlData() {
-          var params  = new URLSearchParams(window.location.search);
-          var data    = {};
-
-          // Facebook Click ID — самый важный параметр, передаётся автоматически
-          // Meta добавляет ?fbclid=... ко всем ссылкам из Facebook рекламы
-          data.fbclid      = params.get("fbclid") || null;
-
-          // UTM-метки — обязательны для атрибуции кампаний
-          data.utm_source   = params.get("utm_source")   || null;
-          data.utm_medium   = params.get("utm_medium")   || null;
-          data.utm_campaign = params.get("utm_campaign") || null;
-          data.utm_content  = params.get("utm_content")  || null;
-          data.utm_term     = params.get("utm_term")     || null;
-          data.utm_id       = params.get("utm_id")       || null; // Meta Campaign ID
-
-          // Ad параметры Meta (если настроены в URL кампании)
-          data.ad_id        = params.get("ad_id")        || null;
-          data.adset_id     = params.get("adset_id")     || null;
-          data.campaign_id  = params.get("campaign_id")  || null;
-          data.ad_name      = params.get("ad_name")      || null;
-          data.adset_name   = params.get("adset_name")   || null;
-          data.campaign_name= params.get("campaign_name")|| null;
-          data.placement    = params.get("placement")    || null;
-          data.site_source  = params.get("site_source")  || null;
-
-          return data;
-        }
-
-        // ─── 3. Чтение Facebook Browser Cookies ─────────────────────────────────
-        // _fbc и _fbp — Meta требует их для повышения Event Match Quality
+        // ─── 2. Чтение cookies ───────────────────────────────────────────────────
         function getCookie(name) {
-          var match = document.cookie.match(new RegExp("(?:^|;\\s*)" + name + "=([^;]*)"));
-          return match ? decodeURIComponent(match[1]) : null;
+          var m = document.cookie.match(new RegExp("(?:^|;\\s*)" + name + "=([^;]*)"));
+          return m ? decodeURIComponent(m[1]) : null;
         }
 
         function getFbCookies() {
-          // _fbc генерируется из fbclid и хранится в cookie
-          // _fbp — идентификатор браузера, генерируется Pixel-ом
           var fbc = getCookie("_fbc");
           var fbp = getCookie("_fbp");
-
-          // Если _fbc нет в cookie, но есть fbclid в URL — формируем вручную
-          // Формат: fb.1.{timestamp}.{fbclid}
           if (!fbc) {
-            var urlData = collectUrlData();
-            if (urlData.fbclid) {
-              fbc = "fb.1." + Date.now() + "." + urlData.fbclid;
-            }
+            var p = new URLSearchParams(window.location.search);
+            var cl = p.get("fbclid");
+            if (cl) fbc = "fb.1." + Date.now() + "." + cl;
           }
-
           return { fbc: fbc, fbp: fbp };
         }
 
-        // ─── 4. Сбор данных браузера ─────────────────────────────────────────────
-        function collectBrowserData() {
+        // ─── 3. Формирование Telegram start-параметра из _fbp ────────────────────
+        // Telegram start-param допускает только [A-Za-z0-9_-], макс 64 символа.
+        // _fbp имеет вид "fb.1.{timestamp}.{random}" — заменяем точки на дефисы.
+        // В n8n при получении события от бота нужно заменить "-" обратно на "."
+        // для передачи оригинального _fbp в CAPI.
+        //
+        // Итоговый формат: realizatsia_fb-1-{timestamp}-{random}
+        function encodeFbpForTelegram(fbp) {
+          if (!fbp) return null;
+          // Заменяем точки на дефисы: "fb.1.xxx.yyy" → "fb-1-xxx-yyy"
+          return fbp.replace(/\./g, "-");
+        }
+
+        function buildTelegramStartParam() {
+          var cookies = getFbCookies();
+          var encoded = encodeFbpForTelegram(cookies.fbp);
+
+          // Если fbp доступен — используем его для сопоставления
+          if (encoded) {
+            var param = FUNNEL_NAME + "_" + encoded;
+            // Обрезаем до 64 символов (ограничение Telegram)
+            return param.substring(0, 64);
+          }
+
+          // Фолбэк: fbp недоступен (AdBlock/Privacy браузер)
+          // Используем eventId как уникальный трекер сессии
+          var eventId = getOrCreateEventId();
+          var fallback = FUNNEL_NAME + "_eid_" + eventId.replace(/-/g, "_");
+          return fallback.substring(0, 64);
+        }
+
+        function buildTelegramUrl() {
+          var startParam = buildTelegramStartParam();
+          return "https://t.me/" + TG_BOT + "?start=" + startParam;
+        }
+
+        // ─── 4. Динамическое обновление href всех кнопок Telegram ───────────────
+        // Вызывается при загрузке страницы и после получения IP (чтобы fbp точно был)
+        function updateTelegramLinks() {
+          var links = document.querySelectorAll('a[href*="t.me/' + TG_BOT + '"]');
+          var url   = buildTelegramUrl();
+          links.forEach(function (link) {
+            link.href = url;
+          });
+        }
+
+        // ─── 5. Сбор данных из URL ───────────────────────────────────────────────
+        function collectUrlData() {
+          var p    = new URLSearchParams(window.location.search);
           return {
-            user_agent:       navigator.userAgent                    || null,
-            page_url:         window.location.href                   || null,
-            page_referrer:    document.referrer                      || null,
-            page_title:       document.title                         || null,
-            language:         navigator.language                     || null,
-            screen_width:     window.screen ? window.screen.width    : null,
-            screen_height:    window.screen ? window.screen.height   : null,
-            timezone_offset:  new Date().getTimezoneOffset()         || null,
-            event_time:       Math.floor(Date.now() / 1000),         // UNIX timestamp
+            fbclid:        p.get("fbclid")        || null,
+            utm_source:    p.get("utm_source")    || null,
+            utm_medium:    p.get("utm_medium")    || null,
+            utm_campaign:  p.get("utm_campaign")  || null,
+            utm_content:   p.get("utm_content")   || null,
+            utm_term:      p.get("utm_term")      || null,
+            utm_id:        p.get("utm_id")        || null,
+            ad_id:         p.get("ad_id")         || null,
+            adset_id:      p.get("adset_id")      || null,
+            campaign_id:   p.get("campaign_id")   || null,
+            ad_name:       p.get("ad_name")       || null,
+            adset_name:    p.get("adset_name")    || null,
+            campaign_name: p.get("campaign_name") || null,
+            placement:     p.get("placement")     || null,
           };
         }
 
-        // ─── 5. Запись UTM в sessionStorage при первом заходе ────────────────────
-        // Сохраняем данные реферера, пока пользователь ходит по странице
+        // ─── 6. Кеш UTM в sessionStorage ────────────────────────────────────────
         function persistUtmData() {
           var key = "meta_utm_data";
-          if (!sessionStorage.getItem(key)) {
-            var urlData = collectUrlData();
-            var hasSomeData = Object.values(urlData).some(function(v) { return v !== null; });
-            if (hasSomeData) {
-              sessionStorage.setItem(key, JSON.stringify(urlData));
-            }
+          if (sessionStorage.getItem(key)) return;
+          var d = collectUrlData();
+          if (Object.values(d).some(function (v) { return v !== null; })) {
+            sessionStorage.setItem(key, JSON.stringify(d));
           }
         }
 
         function getStoredUtmData() {
-          try {
-            return JSON.parse(sessionStorage.getItem("meta_utm_data") || "{}");
-          } catch (e) {
-            return {};
-          }
+          try { return JSON.parse(sessionStorage.getItem("meta_utm_data") || "{}"); }
+          catch (e) { return {}; }
         }
 
-        // ─── 6. Отправка события в Meta Pixel (браузер) ──────────────────────────
-        function trackPixelEvent(eventId, buttonLabel) {
+        // ─── 7. Данные браузера ──────────────────────────────────────────────────
+        function collectBrowserData() {
+          return {
+            user_agent:     navigator.userAgent || null,
+            page_url:       window.location.href || null,
+            page_referrer:  document.referrer || null,
+            page_title:     document.title || null,
+            language:       navigator.language || null,
+            screen_width:   window.screen ? window.screen.width  : null,
+            screen_height:  window.screen ? window.screen.height : null,
+            event_time:     Math.floor(Date.now() / 1000),
+          };
+        }
+
+        // ─── 8. Pixel: кастомное событие ButtonClick ─────────────────────────────
+        // ButtonClick — событие нажатия на кнопку (интерес, не конверсия).
+        // Lead будет отправлен через CAPI когда пользователь стартанёт бота.
+        // eventID передаётся для будущей дедупликации (если нужно).
+        function trackPixelButtonClick(eventId, buttonLabel, startParam) {
           if (typeof fbq === "undefined") return;
-          fbq("track", "Lead", {
+          fbq("trackCustom", "ButtonClick", {
             content_name:     buttonLabel || "Telegram Bot",
-            content_category: "Матрица Судьбы",
-            currency:         "EUR",
-            value:            0,
+            content_category: FUNNEL_NAME,
+            tg_start_param:   startParam,  // сохраняем для аналитики
           }, {
             eventID: eventId,
           });
         }
 
-        // ─── 7. Отправка на вебух (для CAPI) ───────────────────────────────────
-        // Сценарий передаст эти данные в Meta Conversions API на сервере
-        // eventID должен совпадать с тем, что отправлен через Pixel — для дедупликации
-        function sendToMakeWebhook(eventId, buttonLabel) {
+        // ─── 9. Отправка на вебхук ───────────────────────────────────────────────
+        // event_name = "ButtonClick" — это событие клика по кнопке на сайте.
+        // Событие Lead будет отправлено из n8n когда пользователь стартует бота.
+        // В поле tg_start_param передаётся закодированный fbp, который бот вернёт
+        // при старте — это ключ для сопоставления пользователя.
+        function sendWebhook(eventId, buttonLabel, startParam) {
           var urlData     = Object.assign({}, getStoredUtmData(), collectUrlData());
           var browserData = collectBrowserData();
           var fbCookies   = getFbCookies();
 
           var payload = {
-            // ── Идентификация события ──
-            event_name:   "Lead",
-            event_id:     eventId,               // ← ключ дедупликации
+            // ── Тип события ──
+            event_name:   "ButtonClick",     // ← клик на сайте, НЕ конверсия
+            event_id:     eventId,
             event_time:   browserData.event_time,
             action_source:"website",
             pixel_id:     PIXEL_ID,
+            funnel:       FUNNEL_NAME,
 
-            // ── URL и источник трафика ──
+            // ── Ключ сопоставления с ботом ──
+            // n8n получит tg_start_param из /start команды бота,
+            // декодирует fbp (заменив "-" на ".") и отправит Lead в CAPI
+            tg_start_param: startParam,
+
+            // ── URL ──
             event_source_url: browserData.page_url,
             page_referrer:    browserData.page_referrer,
             page_title:       browserData.page_title,
 
-            // ── Facebook параметры ──
-            fbclid:  urlData.fbclid  || null,
-            fbc:     fbCookies.fbc   || null,     // важно для Match Quality
-            fbp:     fbCookies.fbp   || null,     // важно для Match Quality
+            // ── Facebook ──
+            fbclid: urlData.fbclid || null,
+            fbc:    fbCookies.fbc  || null,
+            fbp:    fbCookies.fbp  || null,   // оригинальный _fbp (с точками)
 
-            // ── UTM / Кампании ──
+            // ── UTM ──
             utm_source:    urlData.utm_source    || null,
             utm_medium:    urlData.utm_medium    || null,
             utm_campaign:  urlData.utm_campaign  || null,
@@ -1276,47 +1311,41 @@
             campaign_name: urlData.campaign_name || null,
             placement:     urlData.placement     || null,
 
-            // ── Браузерные данные (для user_data в CAPI) ──
-            client_ip_address: clientIpAddress,      // ← IP адрес пользователя
+            // ── Браузер ──
+            client_ip_address: clientIpAddress,
             client_user_agent: browserData.user_agent,
             language:          browserData.language,
             screen_width:      browserData.screen_width,
             screen_height:     browserData.screen_height,
 
             // ── Кнопка ──
-            button_label:  buttonLabel,
+            button_label: buttonLabel,
           };
 
-          // Отправляем асинхронно — не блокируем переход в Telegram
-          fetch(MAKE_WEBHOOK_URL, {
-            method:  "POST",
-            headers: { "Content-Type": "application/json" },
-            body:    JSON.stringify(payload),
-            // keepalive: true — гарантирует отправку даже при уходе со страницы
+          fetch(WEBHOOK_URL, {
+            method:    "POST",
+            headers:   { "Content-Type": "application/json" },
+            body:      JSON.stringify(payload),
             keepalive: true,
           }).catch(function (err) {
-            // Тихая обработка ошибок — не ломаем UX
-            console.warn("[Meta CAPI] Ошибка отправки на webhook:", err);
+            console.warn("[Meta CAPI] Ошибка отправки:", err);
           });
         }
 
-        // ─── 8. Главная функция: клик по кнопке Telegram ─────────────────────────
+        // ─── 10. Главная функция: клик по кнопке ─────────────────────────────────
         function onTelegramButtonClick(buttonLabel) {
-          var eventId = getOrCreateEventId();
-          // Оба запроса идут с одним eventID → Meta автоматически дедуплицирует
-          trackPixelEvent(eventId, buttonLabel);
-          sendToMakeWebhook(eventId, buttonLabel);
+          var eventId    = getOrCreateEventId();
+          var startParam = buildTelegramStartParam();
+          trackPixelButtonClick(eventId, buttonLabel, startParam);
+          sendWebhook(eventId, buttonLabel, startParam);
         }
 
         // ─── Инициализация ────────────────────────────────────────────────────────
-        // Сохраняем UTM сразу при загрузке страницы
         persistUtmData();
+        updateTelegramLinks(); // ← обновляем href кнопок с start-параметром сразу
 
-        // Навешиваем обработчики на все кнопки Telegram
-        var tgLinks = document.querySelectorAll(
-          'a[href^="tg://"], a[href*="taniadhulu_bot"]'
-        );
-
+        // Навешиваем обработчики кликов
+        var tgLinks = document.querySelectorAll('a[href*="t.me/' + TG_BOT + '"]');
         tgLinks.forEach(function (link) {
           link.addEventListener("click", function () {
             var text  = (link.textContent || "").trim().replace(/\s+/g, " ");
@@ -1327,5 +1356,6 @@
 
       })();
     </script>
+
   </body>
 </html>
