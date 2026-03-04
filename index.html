@@ -1101,5 +1101,64 @@
         fadeElements.forEach((el) => observer.observe(el));
       });
     </script>
+
+    <!-- Meta Pixel: отслеживание кликов по кнопкам Telegram-бота -->
+    <script>
+      (function () {
+        /**
+         * Генерирует уникальный ID события для дедупликации между Pixel и CAPI.
+         * Сохраняет в sessionStorage чтобы один визит = один eventID.
+         * @returns {string} уникальный eventID
+         */
+        function getOrCreateEventId() {
+          var key = "meta_tg_event_id";
+          var stored = sessionStorage.getItem(key);
+          if (stored) return stored;
+          var id =
+            typeof crypto !== "undefined" && crypto.randomUUID
+              ? crypto.randomUUID()
+              : "evt_" +
+                Date.now().toString(36) +
+                "_" +
+                Math.random().toString(36).slice(2);
+          sessionStorage.setItem(key, id);
+          return id;
+        }
+
+        /**
+         * Отправляет событие Lead в Meta Pixel при клике на кнопку Telegram.
+         * Использует стандартное событие Lead — лучший вариант для оптимизации конверсий.
+         * eventID передаётся для дедупликации: если в будущем добавится CAPI,
+         * используйте тот же eventID при серверной отправке.
+         * @param {string} buttonLabel - название кнопки
+         */
+        function trackTelegramClick(buttonLabel) {
+          if (typeof fbq === "undefined") return;
+          var eventId = getOrCreateEventId();
+          fbq("track", "Lead", {
+            content_name: buttonLabel || "Telegram Bot",
+            content_category: "Матрица Судьбы",
+            currency: "RUB",
+            value: 0,
+          }, {
+            eventID: eventId,
+          });
+        }
+
+        // Скрипт размещён в конце body — DOM уже готов, навешиваем сразу
+        var tgLinks = document.querySelectorAll(
+          'a[href^="tg://"], a[href*="taniadhulu_bot"]'
+        );
+
+        tgLinks.forEach(function (link) {
+          link.addEventListener("click", function () {
+            // Берём текст кнопки как метку события
+            var text = (link.textContent || "").trim().replace(/\s+/g, " ");
+            var label = text.length > 5 ? text : "Telegram Bot";
+            trackTelegramClick(label);
+          });
+        });
+      })();
+    </script>
   </body>
 </html>
