@@ -1168,7 +1168,7 @@
 
           // Если fbp доступен — используем его для сопоставления
           if (encoded) {
-            var param = FUNNEL_NAME + "_" + encoded;
+            var param = FUNNEL_NAME + "-" + encoded;
             // Обрезаем до 64 символов (ограничение Telegram)
             return param.substring(0, 64);
           }
@@ -1176,7 +1176,7 @@
           // Фолбэк: fbp недоступен (AdBlock/Privacy браузер)
           // Используем eventId как уникальный трекер сессии
           var eventId = getOrCreateEventId();
-          var fallback = FUNNEL_NAME + "_eid_" + eventId.replace(/-/g, "_");
+          var fallback = FUNNEL_NAME + "-eid-" + eventId.replace(/_/g, "-"); // на всякий случай заменяем _ на - 
           return fallback.substring(0, 64);
         }
 
