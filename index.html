@@ -1109,6 +1109,13 @@
         var MAKE_WEBHOOK_URL = "https://automation.inetskills.ru/webhook-test/af197c0e-b8bf-45b8-b263-8018b0967272";
         var PIXEL_ID         = "945363138052136";
 
+        // ─── 0. Получение IP-адреса пользователя ────────────────────────────────
+        var clientIpAddress = null;
+        fetch("https://api.ipify.org?format=json")
+          .then(function (res) { return res.json(); })
+          .then(function (data) { clientIpAddress = data.ip; })
+          .catch(function () { /* тихая ошибка */ });
+
         // ─── 1. Генерация уникального EventID для дедупликации ───────────────────
         // Один eventID на сессию: Meta сам склеит Pixel-событие и CAPI-событие
         function getOrCreateEventId() {
@@ -1226,8 +1233,8 @@
           });
         }
 
-        // ─── 7. Отправка на Make.com webhook (для CAPI) ───────────────────────────
-        // Make.com передаст эти данные в Meta Conversions API на сервере
+        // ─── 7. Отправка на вебух (для CAPI) ───────────────────────────────────
+        // Сценарий передаст эти данные в Meta Conversions API на сервере
         // eventID должен совпадать с тем, что отправлен через Pixel — для дедупликации
         function sendToMakeWebhook(eventId, buttonLabel) {
           var urlData     = Object.assign({}, getStoredUtmData(), collectUrlData());
@@ -1270,6 +1277,7 @@
             placement:     urlData.placement     || null,
 
             // ── Браузерные данные (для user_data в CAPI) ──
+            client_ip_address: clientIpAddress,      // ← IP адрес пользователя
             client_user_agent: browserData.user_agent,
             language:          browserData.language,
             screen_width:      browserData.screen_width,
