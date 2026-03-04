@@ -1151,15 +1151,15 @@
 
         // ─── 3. Формирование Telegram start-параметра из _fbp ────────────────────
         // Telegram start-param допускает только [A-Za-z0-9_-], макс 64 символа.
-        // _fbp имеет вид "fb.1.{timestamp}.{random}" — заменяем точки на дефисы.
-        // В n8n при получении события от бота нужно заменить "-" обратно на "."
+        // _fbp имеет вид "fb.1.{timestamp}.{random}" — заменяем точки на подчеркивания.
+        // В n8n при получении события от бота нужно заменить "_" обратно на "."
         // для передачи оригинального _fbp в CAPI.
         //
-        // Итоговый формат: realizatsia_fb-1-{timestamp}-{random}
+        // Итоговый формат: realizatsia-fb_1_{timestamp}_{random}
         function encodeFbpForTelegram(fbp) {
           if (!fbp) return null;
-          // Заменяем точки на дефисы: "fb.1.xxx.yyy" → "fb-1-xxx-yyy"
-          return fbp.replace(/\./g, "-");
+          // Заменяем точки на подчеркивания: "fb.1.xxx.yyy" → "fb_1_xxx_yyy"
+          return fbp.replace(/\./g, "_");
         }
 
         function buildTelegramStartParam() {
