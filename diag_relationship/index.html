@@ -361,10 +361,14 @@
         // eventID передаётся для будущей дедупликации (если нужно).
         function trackPixelButtonClick(eventId, buttonLabel, startParam) {
           if (typeof fbq === "undefined") return;
-          fbq("trackCustom", "ButtonClick", {
-            content_name:     buttonLabel || "Telegram Bot",
-            content_category: FUNNEL_NAME,
-            tg_start_param:   startParam,  // сохраняем для аналитики
+          fbq("track", "Lead", {
+            currency:         "EUR",
+            content_name:     "Диагностика судьбы",
+            value:            0,
+            content_type:     "telegram",
+            lead_type:        "telegram_click",
+            button_name:      buttonLabel || "Перейти в Telegram",
+            tg_start_param:   startParam,
           }, {
             eventID: eventId,
           });
@@ -382,12 +386,22 @@
 
           var payload = {
             // ── Тип события ──
-            event_name:   "ButtonClick",     // ← клик на сайте, НЕ конверсия
+            event_name:   "Lead",     // ← изменено на Lead
             event_id:     eventId,
             event_time:   browserData.event_time,
             action_source:"website",
             pixel_id:     PIXEL_ID,
             funnel:       FUNNEL_NAME,
+
+            // ── Дополнительные данные (custom_data) ──
+            custom_data: {
+              currency:     "EUR",
+              content_name: "Диагностика судьбы",
+              value:        0,
+              content_type: "telegram",
+              lead_type:    "telegram_click",
+              button_name:  buttonLabel || "Перейти в Telegram"
+            },
 
             // ── Ключ сопоставления с ботом ──
             // n8n получит tg_start_param из /start команды бота,
